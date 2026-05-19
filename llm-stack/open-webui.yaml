@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: open-webui
+  namespace: llm-stack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: open-webui
+  template:
+    metadata:
+      labels:
+        app: open-webui
+    spec:
+      containers:
+      - name: open-webui
+        image: ghcr.io/open-webui/open-webui:main
+        ports:
+        - containerPort: 8080
+        env:
+        - name: OPENAI_API_BASE_URL
+          value: "http://litellm-service.llm-stack.svc.cluster.local:4000/v1"
+        - name: OPENAI_API_KEY
+          value: "sk-dummy-key"
+        - name: WEBUI_AUTH
+          value: "False"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: open-webui-service
+  namespace: llm-stack
+spec:
+  selector:
+    app: open-webui
+  ports:
+  - port: 8080
+    targetPort: 8080
