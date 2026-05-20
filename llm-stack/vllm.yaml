@@ -16,16 +16,19 @@ spec:
       containers:
       - name: vllm
         image: vllm/vllm-openai-cpu:latest-arm64
+        env:
+        - name: VLLM_USE_V1
+          value: "0"
         command: ["python3", "-m", "vllm.entrypoints.openai.api_server"]
         args: ["--model", "TinyLlama/TinyLlama-1.1B-Chat-v1.0", "--host", "0.0.0.0", "--port", "8000", "--max-model-len", "1024", "--enforce-eager", "--gpu-memory-utilization", "0.1"]
         ports:
         - containerPort: 8000
         resources:
           requests:
-            cpu: "2"
+            cpu: "1"
             memory: "2Gi"
           limits:
-            cpu: "4"
+            cpu: "2"
             memory: "8Gi"
 ---
 apiVersion: v1
