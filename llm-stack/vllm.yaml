@@ -19,16 +19,29 @@ spec:
         env:
         - name: VLLM_USE_V1
           value: "0"
+        - name: VLLM_CPU_KVCACHE_SPACE
+          value: "2"
         command: ["python3", "-m", "vllm.entrypoints.openai.api_server"]
-        args: ["--model", "Qwen/Qwen2.5-0.5B-Instruct-GGUF", "--tokenizer", "Qwen/Qwen2.5-0.5B-Instruct", "--host", "0.0.0.0", "--port", "8000", "--max-model-len", "512", "--enforce-eager", "--gpu-memory-utilization", "0.05"]
+        args: 
+        - "--model"
+        - "unsloth/Llama-3.2-3B-Instruct-GGUF"
+        - "--tokenizer"
+        - "unsloth/Llama-3.2-3B-Instruct"
+        - "--host"
+        - "0.0.0.0"
+        - "--port"
+        - "8000"
+        - "--max-model-len"
+        - "2048"
+        - "--enforce-eager"
         ports:
         - containerPort: 8000
         resources:
           requests:
-            cpu: "1"
-            memory: "2Gi"
-          limits:
             cpu: "2"
+            memory: "4Gi"
+          limits:
+            cpu: "4"
             memory: "8Gi"
 ---
 apiVersion: v1
