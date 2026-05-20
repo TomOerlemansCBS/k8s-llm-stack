@@ -20,7 +20,7 @@ spec:
         - name: VLLM_USE_V1
           value: "0"
         command: ["python3", "-m", "vllm.entrypoints.openai.api_server"]
-        args: ["--model", "TinyLlama/TinyLlama-1.1B-Chat-v1.0", "--host", "0.0.0.0", "--port", "8000", "--max-model-len", "512", "--enforce-eager", "--gpu-memory-utilization", "0.05"]
+        args: ["--model", "Qwen/Qwen2.5-0.5B-Instruct-GGUF", "--tokenizer", "Qwen/Qwen2.5-0.5B-Instruct", "--host", "0.0.0.0", "--port", "8000", "--max-model-len", "512", "--enforce-eager", "--gpu-memory-utilization", "0.05"]
         ports:
         - containerPort: 8000
         resources:
